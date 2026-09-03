@@ -148,17 +148,29 @@
           <a
             href="https://docs.google.com/spreadsheets/d/1KnkFEimhryenAXEHQYHrEx6j1dlu8Zvq1kTRt0z_jL8/edit?usp=sharing"
             target="_blank"
-            class="flex items-center gap-2 bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 px-4 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-medium transition"
+            class="flex items-center justify-center gap-2 bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 px-4 h-10 rounded-full text-sm font-medium transition shrink-0 shadow-sm"
           >
-            <i class="fa-solid fa-file-excel"></i>
-            <span class="hidden md:inline">ดู Google Sheet</span>
+            <i class="fa-solid fa-file-excel text-base"></i> <span>Sheet</span>
           </a>
+
+          <div class="relative hidden lg:block w-64">
+            <i
+              class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+            ></i>
+            <input
+              type="text"
+              placeholder="Search here..."
+              class="w-full bg-[#F8F9FB] rounded-full py-2.5 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-brandBlue/20"
+            />
+          </div>
+
+          <!-- ปุ่ม Refresh ปรับให้สูงเท่ากัน (40px) -->
           <button
             onclick="loadDashboard()"
-            class="text-brandBlue bg-brandBlue/10 p-2.5 rounded-full hover:bg-brandBlue/20 transition shrink-0"
+            class="w-10 h-10 flex items-center justify-center text-brandBlue bg-brandBlue/10 rounded-full hover:bg-brandBlue/20 transition shrink-0 shadow-sm"
             title="รีเฟรชข้อมูล"
           >
-            <i class="fa-solid fa-rotate-right"></i>
+            <i class="fa-solid fa-rotate-right text-base"></i>
           </button>
           <div
             class="flex items-center gap-3 border-l border-gray-200 pl-3 md:pl-5 ml-1"
