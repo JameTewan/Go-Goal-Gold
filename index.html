@@ -410,6 +410,7 @@
           <button
             id="mobileMenuBtn"
             type="button"
+            aria-label="เปิดเมนูหลัก"
             class="md:hidden w-10 h-10 -ml-2 flex items-center justify-center rounded-full hover:bg-ink/5 focus-ring"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -445,7 +446,8 @@
           <!-- ADMIN BUTTON -->
           <button
             id="btnAdmin"
-            class="ml-2 w-8 h-8 rounded-full bg-ink/5 hover:bg-ink/10 flex items-center justify-center transition text-ink/50 hover:text-ink"
+            aria-label="เข้าสู่ระบบผู้ดูแล (Admin)"
+            class="ml-2 w-8 h-8 rounded-full bg-ink/5 hover:bg-ink/10 flex items-center justify-center transition text-ink/50 hover:text-ink focus-ring"
           >
             <i class="fa-solid fa-lock text-xs"></i>
           </button>
@@ -516,7 +518,8 @@
                 <button
                   id="btnSimpleMode"
                   type="button"
-                  class="mode-btn active"
+                  aria-pressed="true"
+                  class="mode-btn active focus-ring"
                   onclick="setCalcMode('simple')"
                 >
                   โหมดปกติ
@@ -524,7 +527,8 @@
                 <button
                   id="btnAdvMode"
                   type="button"
-                  class="mode-btn inactive"
+                  aria-pressed="false"
+                  class="mode-btn inactive focus-ring"
                   onclick="setCalcMode('advanced')"
                 >
                   โหมดละเอียด
@@ -545,6 +549,7 @@
                 min="0"
                 step="500"
                 value="60000"
+                aria-label="กรอกงบประมาณรวมทั้งกลุ่ม"
                 class="w-full pl-9 pr-4 py-3 rounded-xl border border-ink/15 font-mono text-lg focus-ring focus:border-teal outline-none"
               />
             </div>
@@ -555,6 +560,7 @@
               <button
                 type="button"
                 id="paxMinus"
+                aria-label="ลดจำนวนคน"
                 class="w-11 h-11 shrink-0 rounded-full border border-ink/20 text-xl leading-none hover:border-ink/50 focus-ring"
               >
                 −
@@ -565,11 +571,13 @@
                 min="1"
                 max="30"
                 value="4"
+                aria-label="กรอกจำนวนผู้เดินทาง"
                 class="w-20 shrink-0 text-center py-3 rounded-xl border border-ink/15 font-mono text-lg focus-ring focus:border-teal outline-none"
               />
               <button
                 type="button"
                 id="paxPlus"
+                aria-label="เพิ่มจำนวนคน"
                 class="w-11 h-11 shrink-0 rounded-full border border-ink/20 text-xl leading-none hover:border-ink/50 focus-ring"
               >
                 +
@@ -580,7 +588,8 @@
                 min="1"
                 max="20"
                 value="4"
-                class="flex-1 min-w-[100px]"
+                aria-label="เลื่อนปรับจำนวนผู้เดินทาง"
+                class="flex-1 min-w-[100px] focus-ring"
               />
             </div>
             <div
@@ -596,21 +605,31 @@
                   <span class="font-bold text-ink">"กิจกรรม/ท่องเที่ยว"</span>
                   ไปใช้เป็นเกณฑ์จัดทริป
                 </p>
-                <p id="sumWarning" class="text-[10px] text-coral mt-1 hidden">
+                <p
+                  id="sumWarning"
+                  class="text-[10px] text-coral mt-1 hidden"
+                  role="alert"
+                >
                   *ผลรวมไม่ใช่ 100% ระบบปรับสัดส่วนให้อัตโนมัติแล้ว
                 </p>
               </div>
               <div
                 class="flex flex-col sm:flex-row gap-6 items-center border border-gray-100 p-4 rounded-xl shadow-sm"
               >
-                <div id="mainChart" class="donut-base shrink-0"></div>
+                <div
+                  id="mainChart"
+                  class="donut-base shrink-0"
+                  aria-hidden="true"
+                ></div>
                 <div
                   class="flex-1 grid grid-cols-2 gap-x-4 gap-y-3 w-full font-body text-[11px]"
                 >
                   <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
-                      <span class="w-3 h-3 rounded-full bg-cTravel"></span
-                      ><span class="text-ink font-medium">เดินทาง</span>
+                      <span class="w-3 h-3 rounded-full bg-cTravel"></span>
+                      <label for="inpTvl" class="text-ink font-medium"
+                        >เดินทาง</label
+                      >
                     </div>
                     <div class="flex items-center gap-1">
                       <input
@@ -623,8 +642,10 @@
                   </div>
                   <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
-                      <span class="w-3 h-3 rounded-full bg-cAccomm"></span
-                      ><span class="text-ink font-medium">ที่พัก</span>
+                      <span class="w-3 h-3 rounded-full bg-cAccomm"></span>
+                      <label for="inpAcc" class="text-ink font-medium"
+                        >ที่พัก</label
+                      >
                     </div>
                     <div class="flex items-center gap-1">
                       <input
@@ -637,8 +658,10 @@
                   </div>
                   <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
-                      <span class="w-3 h-3 rounded-full bg-cFood"></span
-                      ><span class="text-ink font-medium">อาหาร</span>
+                      <span class="w-3 h-3 rounded-full bg-cFood"></span>
+                      <label for="inpFood" class="text-ink font-medium"
+                        >อาหาร</label
+                      >
                     </div>
                     <div class="flex items-center gap-1">
                       <input
@@ -651,8 +674,10 @@
                   </div>
                   <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
-                      <span class="w-3 h-3 rounded-full bg-cTour"></span
-                      ><span class="text-ink font-bold">กิจกรรม</span>
+                      <span class="w-3 h-3 rounded-full bg-cTour"></span>
+                      <label for="inpTour" class="text-ink font-bold"
+                        >กิจกรรม</label
+                      >
                     </div>
                     <div class="flex items-center gap-1">
                       <input
@@ -665,8 +690,10 @@
                   </div>
                   <div class="flex items-center justify-between col-span-1">
                     <div class="flex items-center gap-2">
-                      <span class="w-3 h-3 rounded-full bg-cSouv"></span
-                      ><span class="text-ink font-medium">ของฝาก</span>
+                      <span class="w-3 h-3 rounded-full bg-cSouv"></span>
+                      <label for="inpSouv" class="text-ink font-medium"
+                        >ของฝาก</label
+                      >
                     </div>
                     <div class="flex items-center gap-1">
                       <input
@@ -707,6 +734,7 @@
           <div
             id="resultContent"
             class="hidden flex-col justify-center w-full h-full opacity-0 transition-opacity duration-500"
+            aria-live="polite"
           >
             <p class="font-mono text-xs tracking-widest text-gold mb-2">
               RESULT
@@ -824,7 +852,7 @@
               type="button"
               id="sortAscBtn"
               onclick="setSortOrder('asc')"
-              class="px-3 py-1.5 rounded-full font-medium transition-all bg-teal text-paper"
+              class="px-4 py-2 rounded-full font-medium transition-all bg-teal text-paper focus-ring"
             >
               น้อย ➔ มาก
             </button>
@@ -832,7 +860,7 @@
               type="button"
               id="sortDescBtn"
               onclick="setSortOrder('desc')"
-              class="px-3 py-1.5 rounded-full font-medium transition-all text-ink/60 hover:text-ink"
+              class="px-4 py-2 rounded-full font-medium transition-all text-ink/60 hover:text-ink focus-ring"
             >
               มาก ➔ น้อย
             </button>
@@ -848,6 +876,7 @@
             height="18"
             viewBox="0 0 18 18"
             fill="none"
+            aria-hidden="true"
           >
             <circle
               cx="8"
@@ -868,6 +897,7 @@
           <input
             id="tripSearch"
             type="text"
+            aria-label="ค้นหาจุดหมายปลายทาง"
             placeholder="ค้นหาจุดหมาย เช่น เชียงใหม่ ญี่ปุ่น (กด Enter เพื่อค้นหา)"
             class="w-full bg-white pl-11 pr-4 py-3.5 rounded-full border border-ink/15 focus-ring focus:border-teal outline-none text-sm shadow-sm"
           />
@@ -965,12 +995,13 @@
     <div
       id="toast"
       class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-ink text-paper px-5 py-3 rounded-full text-sm font-medium shadow-lg max-w-[90vw] text-center"
+      role="status"
     ></div>
 
     <!-- TRIP DETAILS MODAL -->
     <div
       id="tripModal"
-      class="fixed inset-0 bg-ink/70 z-50 justify-center items-center backdrop-blur-sm p-4"
+      class="fixed inset-0 bg-ink/70 z-50 justify-center items-center backdrop-blur-sm p-4 hidden"
     >
       <div
         class="modal-box bg-white w-full max-w-[480px] rounded-2xl shadow-2xl overflow-hidden relative animate-[slideUp_0.3s_ease-out]"
@@ -981,7 +1012,8 @@
           <div class="flex items-center gap-4">
             <button
               id="closeModalBtn"
-              class="text-ink/60 hover:text-ink transition"
+              aria-label="ปิดหน้าต่างรายละเอียดทริป"
+              class="text-ink/60 hover:text-ink transition focus-ring"
             >
               <i class="fa-solid fa-arrow-left text-xl"></i>
             </button>
@@ -1006,7 +1038,7 @@
           <div class="modal-hero">
             <div class="modal-hero-media">
               <div class="modal-hero-badge">แนะนำ</div>
-              <img id="modalImg" src="" alt="Trip Image" />
+              <img id="modalImg" src="" alt="ภาพสถานที่ท่องเที่ยว" />
             </div>
             <div class="modal-hero-info">
               <h3
@@ -1096,6 +1128,7 @@
               <div
                 id="modalChart"
                 class="donut-base modal-donut shrink-0 w-[70px] h-[70px]"
+                aria-hidden="true"
               ></div>
               <div class="flex flex-col gap-2 font-body text-[10px] w-28">
                 <div class="flex items-center justify-between">
@@ -1145,6 +1178,7 @@
         <div class="modal-action-bar">
           <button
             id="modalBookmarkBtn"
+            aria-label="บันทึกทริปนี้เข้ารายการโปรด"
             data-active="false"
             class="w-12 h-12 flex items-center justify-center rounded-lg border border-ink/20 text-ink/60 hover:bg-ink/5 shrink-0 transition focus-ring"
           >
@@ -1170,7 +1204,8 @@
       >
         <button
           id="closePinModal"
-          class="absolute top-4 right-4 text-ink/40 hover:text-ink transition"
+          aria-label="ปิดหน้าต่างรหัสผ่าน"
+          class="absolute top-4 right-4 text-ink/40 hover:text-ink transition focus-ring"
         >
           <i class="fa-solid fa-xmark"></i>
         </button>
@@ -1186,16 +1221,21 @@
             type="password"
             id="pinInput"
             maxlength="4"
+            aria-label="ช่องกรอกรหัส PIN"
             placeholder="••••"
             class="w-24 text-center text-3xl tracking-[0.2em] pb-1 border-b-2 border-ink/20 focus:border-teal outline-none bg-transparent font-mono text-ink"
           />
         </div>
-        <p id="pinError" class="text-[11px] text-coral hidden mb-4">
+        <p
+          id="pinError"
+          class="text-[11px] text-coral hidden mb-4"
+          role="alert"
+        >
           รหัส PIN ไม่ถูกต้อง
         </p>
         <button
           id="btnSubmitPin"
-          class="w-full mt-4 bg-ink text-paper py-3 rounded-xl text-sm font-semibold hover:bg-teal-dark transition"
+          class="w-full mt-4 bg-ink text-paper py-3 rounded-xl text-sm font-semibold hover:bg-teal-dark transition focus-ring"
         >
           เข้าสู่ระบบ
         </button>
@@ -1223,6 +1263,9 @@
         let showOnlyFavorites = false;
 
         const modal = document.getElementById("tripModal");
+
+        // Focus Management Variables
+        let lastFocusedElement = null;
 
         function logEvent(eventName, eventValue, details = {}) {
           fetch(GAS_ENDPOINT, {
@@ -1285,10 +1328,16 @@
         window.setCalcMode = function (mode) {
           currentCalcMode = mode;
           const isAdv = mode === "advanced";
-          document.getElementById("btnAdvMode").className =
-            `mode-btn ${isAdv ? "active" : "inactive"}`;
-          document.getElementById("btnSimpleMode").className =
-            `mode-btn ${!isAdv ? "active" : "inactive"}`;
+
+          const btnAdv = document.getElementById("btnAdvMode");
+          const btnSimple = document.getElementById("btnSimpleMode");
+
+          btnAdv.className = `mode-btn ${isAdv ? "active" : "inactive"} focus-ring`;
+          btnAdv.setAttribute("aria-pressed", isAdv ? "true" : "false");
+
+          btnSimple.className = `mode-btn ${!isAdv ? "active" : "inactive"} focus-ring`;
+          btnSimple.setAttribute("aria-pressed", !isAdv ? "true" : "false");
+
           document
             .getElementById("advModePanel")
             .classList.toggle("hidden", !isAdv);
@@ -1305,12 +1354,12 @@
           sortOrder = order;
           document.getElementById("sortAscBtn").className =
             order === "asc"
-              ? "px-3 py-1.5 rounded-full font-medium transition-all bg-teal text-paper"
-              : "px-3 py-1.5 rounded-full font-medium transition-all text-ink/60 hover:text-ink";
+              ? "px-4 py-2 rounded-full font-medium transition-all bg-teal text-paper focus-ring"
+              : "px-4 py-2 rounded-full font-medium transition-all text-ink/60 hover:text-ink focus-ring";
           document.getElementById("sortDescBtn").className =
             order === "desc"
-              ? "px-3 py-1.5 rounded-full font-medium transition-all bg-teal text-paper"
-              : "px-3 py-1.5 rounded-full font-medium transition-all text-ink/60 hover:text-ink";
+              ? "px-4 py-2 rounded-full font-medium transition-all bg-teal text-paper focus-ring"
+              : "px-4 py-2 rounded-full font-medium transition-all text-ink/60 hover:text-ink focus-ring";
           renderFilteredTrips();
         };
 
@@ -1500,11 +1549,51 @@
               const hasNote =
                 trip.notes && String(trip.notes).trim().length > 0;
               return `<div class="ticket-card overflow-hidden flex flex-col justify-between group hover:-translate-y-1 transition-all duration-200">
-            <div><div class="relative h-48 trip-photo overflow-hidden"><img src="${trip.imageUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"><span class="absolute top-3 left-3 bg-ink/80 text-paper text-[11px] font-mono px-2.5 py-1 rounded-full backdrop-blur">${trip.days === 1 && trip.nights === 0 ? "one day trip" : `${trip.days} วัน ${trip.nights} คืน`}</span><button type="button" onclick="toggleFavorite(${trip.id})" data-bookmark data-active="${isFav}" class="absolute top-3 right-3 w-9 h-9 bg-white/90 rounded-full flex items-center justify-center shadow-sm text-lg focus-ring">♥</button></div>
+            <div><div class="relative h-48 trip-photo overflow-hidden"><img src="${trip.imageUrl}" alt="${trip.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"><span class="absolute top-3 left-3 bg-ink/80 text-paper text-[11px] font-mono px-2.5 py-1 rounded-full backdrop-blur">${trip.days === 1 && trip.nights === 0 ? "one day trip" : `${trip.days} วัน ${trip.nights} คืน`}</span><button type="button" aria-label="เพิ่มลงรายการโปรด" onclick="toggleFavorite(${trip.id})" data-bookmark data-active="${isFav}" class="absolute top-3 right-3 w-9 h-9 bg-white/90 rounded-full flex items-center justify-center shadow-sm text-lg focus-ring">♥</button></div>
             <div class="p-5"><span class="text-[11px] font-mono text-teal uppercase">${trip.destination}</span><h3 class="font-display text-2xl mt-1 text-ink pt-1">${trip.title}</h3><p class="text-xs text-ink/60 mt-2 line-clamp-2">${trip.description}</p>${hasNote ? `<div class="note-badge-card"><i class="fa-solid fa-circle-info"></i><span class="line-clamp-2">${trip.notes}</span></div>` : ""}</div></div>
-            <div><div class="stub-divider mx-5 my-2"></div><div class="p-5 pt-2"><div class="flex items-center justify-between mb-4"><div><span class="text-[10px] font-mono text-ink/50 block">งบจัดทริปต่อคน</span><span class="font-display text-xl text-teal font-semibold pt-1 block">${formatCurrency(trip.pricePerPerson)}</span></div><div class="text-right"><span class="text-[10px] font-mono text-ink/50 block">รวม (${peopleCount} คน)</span><span class="font-mono text-sm font-semibold text-coral block pt-1">${formatCurrency(totalCost)}</span></div></div><button onclick="openTripModal(${trip.id})" class="w-full py-2.5 bg-paper/50 border border-ink/10 text-ink text-sm font-semibold rounded-xl hover:bg-ink hover:text-paper transition-colors focus-ring">ดูรายละเอียดทริป</button></div></div></div>`;
+            <div><div class="stub-divider mx-5 my-2"></div><div class="p-5 pt-2"><div class="flex items-center justify-between mb-4"><div><span class="text-[10px] font-mono text-ink/50 block">งบจัดทริปต่อคน</span><span class="font-display text-xl text-teal font-semibold pt-1 block">${formatCurrency(trip.pricePerPerson)}</span></div><div class="text-right"><span class="text-[10px] font-mono text-ink/50 block">รวม (${peopleCount} คน)</span><span class="font-mono text-sm font-semibold text-coral block pt-1">${formatCurrency(totalCost)}</span></div></div><button aria-label="ดูรายละเอียดทริป ${trip.title}" onclick="openTripModal(${trip.id})" class="w-full py-2.5 bg-paper/50 border border-ink/10 text-ink text-sm font-semibold rounded-xl hover:bg-ink hover:text-paper transition-colors focus-ring">ดูรายละเอียดทริป</button></div></div></div>`;
             })
             .join("");
+        }
+
+        // --- Focus Management Functionality ---
+        function handleModalKeydown(e) {
+          if (e.key === "Escape") {
+            closeTripModal();
+            return;
+          }
+          if (e.key === "Tab") {
+            const focusableElements = modal.querySelectorAll(
+              'button:not([disabled]), a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+            );
+            if (focusableElements.length === 0) return;
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+
+            if (e.shiftKey) {
+              if (document.activeElement === firstElement) {
+                lastElement.focus();
+                e.preventDefault();
+              }
+            } else {
+              if (document.activeElement === lastElement) {
+                firstElement.focus();
+                e.preventDefault();
+              }
+            }
+          }
+        }
+
+        function closeTripModal() {
+          modal.classList.remove("active");
+          currentModalTripId = null;
+
+          document.body.classList.remove("overflow-hidden");
+          document.removeEventListener("keydown", handleModalKeydown);
+
+          if (lastFocusedElement) {
+            lastFocusedElement.focus();
+          }
         }
 
         window.openTripModal = function (tripId) {
@@ -1554,7 +1643,7 @@
                 url: trip.bookingUrl,
                 title: trip.title,
               });
-              window.open(trip.bookingUrl, "_blank");
+              window.open(trip.bookingUrl, "_blank", "noopener noreferrer");
             };
             btn.disabled = false;
             btn.classList.remove("opacity-50", "cursor-not-allowed");
@@ -1583,7 +1672,19 @@
             tl += `<div class="flex gap-3 items-center bg-white p-2 rounded-lg border border-gray-100 shadow-sm relative"><div class="w-2 h-2 bg-ink rounded-full absolute -left-[14px]"></div><div class="w-12 h-10 bg-gray-50 rounded flex-shrink-0 flex items-center justify-center border border-gray-100">${icn}</div><div class="flex-1 min-w-0"><h5 class="text-xs font-bold text-ink">Day ${i}</h5><p class="text-[11px] text-ink/60 truncate">${det}</p></div></div>`;
           }
           document.getElementById("modalTimeline").innerHTML = tl;
+
+          // --- จัดการ Accessibility และ Focus หลังจากดึงข้อมูลแสดงผลเสร็จ ---
+          lastFocusedElement = document.activeElement;
+          document.body.classList.add("overflow-hidden");
+          modal.setAttribute("aria-modal", "true");
+          modal.setAttribute("role", "dialog");
           modal.classList.add("active");
+
+          setTimeout(
+            () => document.getElementById("closeModalBtn").focus(),
+            100,
+          );
+          document.addEventListener("keydown", handleModalKeydown);
         };
 
         document
@@ -1591,16 +1692,14 @@
           .addEventListener("click", () => {
             if (currentModalTripId) toggleFavorite(currentModalTripId);
           });
+
         document
           .getElementById("closeModalBtn")
-          .addEventListener("click", () => {
-            modal.classList.remove("active");
-            currentModalTripId = null;
-          });
+          .addEventListener("click", closeTripModal);
+
         modal.addEventListener("click", (e) => {
           if (e.target === modal) {
-            modal.classList.remove("active");
-            currentModalTripId = null;
+            closeTripModal();
           }
         });
 
