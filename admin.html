@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard — Go Gold Goal</title>
+    <!-- Fonts: Poppins for English/Numbers, Kanit for Thai -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kanit:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              bgMain: "#F8F9FB",
+              cardBg: "#FFFFFF",
+              textDark: "#05004E",
+              textMuted: "#737791",
+              brandBlue: "#4318FF",
+              // Pastel KPI Colors
+              kpiRedBg: "#FFE2E5",
+              kpiRedIcon: "#FA5A7D",
+              kpiYelBg: "#FFF4DE",
+              kpiYelIcon: "#FF947A",
+              kpiGrnBg: "#DCFCE7",
+              kpiGrnIcon: "#3CD856",
+              kpiPurBg: "#F3E8FF",
+              kpiPurIcon: "#BF83FF",
+              // Chart Colors
+              chartBlue: "#0095FF",
+              chartCyan: "#00E096",
+              chartYellow: "#FFC100",
+              chartPurple: "#884DFF",
+            },
+            fontFamily: {
+              sans: ["Poppins", "Kanit", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #f8f9fb;
+        color: #737791;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      .text-dark {
+        color: #05004e;
+      }
+      .glass-panel {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0px 4px 20px rgba(237, 237, 246, 0.5);
+        padding: 24px;
+      }
+
+      /* Progress Bar */
+      .progress-track {
+        background: #f1f5f9;
+        border-radius: 4px;
+        height: 6px;
+        width: 100%;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        border-radius: 4px;
+      }
+      .rank-badge {
+        padding: 4px 8px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        border: 1px solid;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body class="flex h-screen overflow-hidden font-sans">
+    <!-- SIDEBAR -->
+    <aside
+      class="w-64 bg-white border-r border-gray-100 flex-shrink-0 hidden md:flex flex-col"
+    >
+      <div class="h-20 flex items-center px-8 gap-3">
+        <div
+          class="w-8 h-8 bg-brandBlue rounded-lg flex items-center justify-center text-white"
+        >
+          <i class="fa-solid fa-plane"></i>
+        </div>
+        <span class="text-xl font-bold text-dark">GoGold</span>
+      </div>
+      <nav class="flex-1 px-4 py-6 flex flex-col gap-2">
+        <a
+          href="#"
+          class="flex items-center gap-4 px-4 py-3 bg-brandBlue text-white rounded-xl font-medium shadow-md shadow-brandBlue/20"
+          ><i class="fa-solid fa-chart-pie"></i> Dashboard</a
+        >
+
+        <!-- เพิ่มเมนู Google Sheet ใน Sidebar -->
+        <a
+          href="https://docs.google.com/spreadsheets/d/1KnkFEimhryenAXEHQYHrEx6j1dlu8Zvq1kTRt0z_jL8/edit?usp=sharing"
+          target="_blank"
+          class="flex items-center gap-4 px-4 py-3 text-textMuted hover:bg-green-50 hover:text-green-600 rounded-xl font-medium transition"
+        >
+          <i class="fa-solid fa-table"></i> Google Sheet
+        </a>
+
+        <a
+          href="index.html"
+          class="flex items-center gap-4 px-4 py-3 text-textMuted hover:bg-gray-50 rounded-xl font-medium transition"
+          ><i class="fa-solid fa-house"></i> กลับหน้าหลัก</a
+        >
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-1 flex flex-col h-screen overflow-hidden">
+      <!-- TOP NAV -->
+      <header
+        class="h-20 bg-white border-b border-gray-100 flex items-center justify-between px-4 md:px-8 shrink-0"
+      >
+        <h1 class="text-2xl font-bold text-dark hidden sm:block">Dashboard</h1>
+        <div class="flex items-center gap-3 md:gap-5 flex-1 justify-end">
+          <!-- เพิ่มปุ่ม Google Sheet ตรง Header ให้กดง่ายๆ -->
+          <a
+            href="https://docs.google.com/spreadsheets/d/1KnkFEimhryenAXEHQYHrEx6j1dlu8Zvq1kTRt0z_jL8/edit?usp=sharing"
+            target="_blank"
+            class="flex items-center gap-2 bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 px-4 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-medium transition"
+          >
+            <i class="fa-solid fa-file-excel"></i>
+            <span class="hidden md:inline">ดู Google Sheet</span>
+          </a>
+          <button
+            onclick="loadDashboard()"
+            class="text-brandBlue bg-brandBlue/10 p-2.5 rounded-full hover:bg-brandBlue/20 transition shrink-0"
+            title="รีเฟรชข้อมูล"
+          >
+            <i class="fa-solid fa-rotate-right"></i>
+          </button>
+          <div
+            class="flex items-center gap-3 border-l border-gray-200 pl-3 md:pl-5 ml-1"
+          >
+            <img
+              src="https://ui-avatars.com/api/?name=Admin&background=4318FF&color=fff"
+              class="w-10 h-10 rounded-full shadow-sm"
+            />
+            <div class="hidden sm:block">
+              <p class="text-sm font-semibold text-dark">Admin</p>
+              <p class="text-xs text-textMuted">Admin Role</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- DASHBOARD SCROLL AREA -->
+      <main class="flex-1 overflow-y-auto p-4 md:p-8">
+        <!-- ROW 1: KPI & LINE CHART -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
+          <!-- Overall Stats (KPI Cards) -->
+          <div class="glass-panel lg:col-span-7 flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+              <div>
+                <h2 class="text-lg font-bold text-dark">ภาพรวมทั้งหมด</h2>
+                <p class="text-xs">สรุปข้อมูลการใช้งานระบบตั้งแต่เริ่มต้น</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 flex-1">
+              <!-- Card 1 -->
+              <div
+                class="bg-kpiRedBg rounded-2xl p-4 flex flex-col justify-center"
+              >
+                <div
+                  class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-kpiRedIcon mb-3 shadow-sm"
+                >
+                  <i class="fa-solid fa-users"></i>
+                </div>
+                <h3 id="statUsers" class="text-2xl font-bold text-dark mb-1">
+                  0
+                </h3>
+                <p class="text-xs font-medium text-dark/70">ผู้ใช้งานทั้งหมด</p>
+                <p class="text-[10px] text-blue-500 mt-1">+ Users</p>
+              </div>
+              <!-- Card 2 -->
+              <div
+                class="bg-kpiYelBg rounded-2xl p-4 flex flex-col justify-center"
+              >
+                <div
+                  class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-kpiYelIcon mb-3 shadow-sm"
+                >
+                  <i class="fa-regular fa-eye"></i>
+                </div>
+                <h3 id="statViews" class="text-2xl font-bold text-dark mb-1">
+                  0
+                </h3>
+                <p class="text-xs font-medium text-dark/70">ทริปที่ถูกเปิดดู</p>
+                <p class="text-[10px] text-blue-500 mt-1">+ Views</p>
+              </div>
+              <!-- Card 3 -->
+              <div
+                class="bg-kpiGrnBg rounded-2xl p-4 flex flex-col justify-center"
+              >
+                <div
+                  class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-kpiGrnIcon mb-3 shadow-sm"
+                >
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <h3 id="statSearches" class="text-2xl font-bold text-dark mb-1">
+                  0
+                </h3>
+                <p class="text-xs font-medium text-dark/70">คำค้นหาทั้งหมด</p>
+                <p class="text-[10px] text-green-600 mt-1">+ Searches</p>
+              </div>
+              <!-- Card 4 -->
+              <div
+                class="bg-kpiPurBg rounded-2xl p-4 flex flex-col justify-center"
+              >
+                <div
+                  class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-kpiPurIcon mb-3 shadow-sm"
+                >
+                  <i class="fa-solid fa-wallet"></i>
+                </div>
+                <h3 id="statBooks" class="text-2xl font-bold text-dark mb-1">
+                  0
+                </h3>
+                <p class="text-xs font-medium text-dark/70">ยอดกดจองทริป</p>
+                <p class="text-[10px] text-blue-500 mt-1">+ Bookings</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visitor Insights (Line Chart) -->
+          <div class="glass-panel lg:col-span-5 flex flex-col">
+            <h2 class="text-lg font-bold text-dark mb-4">
+              แนวโน้มการใช้งานทั้งหมด
+            </h2>
+            <div class="flex-1 relative min-h-[220px]">
+              <canvas id="timelineChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROW 2: 3 CHARTS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <!-- Top Trips (Bar Chart) -->
+          <div class="glass-panel">
+            <h2 class="text-lg font-bold text-dark mb-4">
+              5 อันดับทริปยอดนิยม
+            </h2>
+            <div class="relative h-[220px] w-full">
+              <canvas id="tripChart"></canvas>
+            </div>
+            <div class="flex justify-center gap-4 mt-3 text-xs">
+              <span class="flex items-center gap-1"
+                ><span class="w-2 h-2 rounded-full bg-chartBlue"></span>
+                ยอดเข้าชม</span
+              >
+            </div>
+          </div>
+
+          <!-- Categories (Doughnut Chart) -->
+          <div class="glass-panel flex flex-col">
+            <h2 class="text-lg font-bold text-dark mb-2">
+              หมวดหมู่ที่ได้รับความสนใจ
+            </h2>
+            <div
+              class="flex-1 relative flex items-center justify-center min-h-[200px]"
+            >
+              <canvas id="catChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Budget Ranges (Bar Chart) -->
+          <div class="glass-panel">
+            <h2 class="text-lg font-bold text-dark mb-4">
+              ช่วงงบประมาณที่ค้นหา
+            </h2>
+            <div class="relative h-[220px] w-full">
+              <canvas id="budgetChart"></canvas>
+            </div>
+            <div class="flex justify-center gap-4 mt-3 text-xs">
+              <span class="flex items-center gap-1"
+                ><span class="w-2 h-2 rounded-full bg-chartYellow"></span>
+                จำนวนครั้ง</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- ROW 3: TOP SEARCHES & RECENT ACTIVITIES -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Top Searches List with Progress -->
+          <div class="glass-panel">
+            <h2 class="text-lg font-bold text-dark mb-6">
+              คำค้นหายอดฮิต (Top Searches)
+            </h2>
+            <div
+              class="grid grid-cols-12 text-xs font-medium text-textMuted mb-3 px-2 border-b border-gray-100 pb-2"
+            >
+              <div class="col-span-1">#</div>
+              <div class="col-span-5">Keyword</div>
+              <div class="col-span-4">Popularity</div>
+              <div class="col-span-2 text-right">Count</div>
+            </div>
+            <div
+              id="searchList"
+              class="flex flex-col gap-4 mt-4 h-[200px] overflow-y-auto pr-2"
+            >
+              <!-- Injected via JS -->
+              <div class="text-center text-sm py-4">กำลังโหลด...</div>
+            </div>
+          </div>
+
+          <!-- Recent Activities Feed -->
+          <div class="glass-panel">
+            <h2 class="text-lg font-bold text-dark mb-6">
+              กิจกรรมล่าสุด (Recent Activity)
+            </h2>
+            <div
+              id="recentActivityList"
+              class="flex flex-col gap-3 mt-4 h-[200px] overflow-y-auto pr-2"
+            >
+              <!-- Injected via JS -->
+              <div class="text-center text-sm py-4">กำลังโหลด...</div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div
+      id="loadingOverlay"
+      class="fixed inset-0 bg-white/70 backdrop-blur-sm z-[100] flex flex-col items-center justify-center transition-opacity duration-300"
+    >
+      <div
+        class="w-12 h-12 border-4 border-brandBlue border-t-transparent rounded-full animate-spin mb-4"
+      ></div>
+      <p class="text-dark font-medium">กำลังเตรียมข้อมูล Dashboard...</p>
+    </div>
+
+    <script>
+      // ========== ⚠️ URL Google Apps Script ==========
+      const GAS_ENDPOINT =
+        "https://script.google.com/macros/s/AKfycbxGAWzCQRZ_SUJZQFzI5XIXDVeA_egvWicujdqQBxXO7cQGQOqkHHHNF71ZNjwX1pKRug/exec";
+
+      // Global Chart.js Config
+      Chart.defaults.font.family = "'Poppins', 'Kanit', sans-serif";
+      Chart.defaults.color = "#737791";
+      Chart.defaults.scale.grid.color = "#F1F5F9";
+      Chart.defaults.scale.grid.borderColor = "transparent";
+
+      let charts = {};
+
+      async function loadDashboard() {
+        document
+          .getElementById("loadingOverlay")
+          .classList.remove("opacity-0", "pointer-events-none");
+        try {
+          const res = await fetch(GAS_ENDPOINT + "?type=analytics");
+          const json = await res.json();
+          if (json.status === "success") {
+            processData(json.data);
+          } else {
+            alert("เกิดข้อผิดพลาด: " + json.message);
+          }
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setTimeout(() => {
+            document
+              .getElementById("loadingOverlay")
+              .classList.add("opacity-0", "pointer-events-none");
+          }, 500);
+        }
+      }
+
+      function processData(data) {
+        const sessions = new Set();
+        const tripCounts = {};
+        const catCounts = {};
+        const searchCounts = {};
+        const budgetRanges = {
+          "< 10k": 0,
+          "10k - 30k": 0,
+          "30k - 50k": 0,
+          "> 50k": 0,
+        };
+        const dailyActivity = {};
+        let bookCount = 0;
+        let viewCount = 0;
+
+        data.forEach((row) => {
+          if (row.sessionId) sessions.add(row.sessionId);
+          if (row.timestamp) {
+            const d = new Date(row.timestamp);
+            if (!isNaN(d)) {
+              const dateStr = d.toLocaleDateString("en-US", {
+                day: "numeric",
+                month: "short",
+              });
+              dailyActivity[dateStr] = (dailyActivity[dateStr] || 0) + 1;
+            }
+          }
+          if (row.action === "view_trip_detail" && row.viewTrip) {
+            viewCount++;
+            tripCounts[row.viewTrip] = (tripCounts[row.viewTrip] || 0) + 1;
+          }
+          if (
+            row.action === "filter_category" &&
+            row.category &&
+            row.category !== "all"
+          ) {
+            catCounts[row.category] = (catCounts[row.category] || 0) + 1;
+          }
+          if (row.action === "search" && row.search) {
+            searchCounts[row.search] = (searchCounts[row.search] || 0) + 1;
+          }
+          if (row.action === "click_book_trip") bookCount++;
+          if (row.action === "submit_budget_form" && row.totalBudget) {
+            let b = Number(row.totalBudget);
+            if (b < 10000) budgetRanges["< 10k"]++;
+            else if (b <= 30000) budgetRanges["10k - 30k"]++;
+            else if (b <= 50000) budgetRanges["30k - 50k"]++;
+            else budgetRanges["> 50k"]++;
+          }
+        });
+
+        document.getElementById("statUsers").innerText = sessions.size;
+        document.getElementById("statViews").innerText = viewCount;
+        document.getElementById("statSearches").innerText =
+          Object.keys(searchCounts).length;
+        document.getElementById("statBooks").innerText = bookCount;
+
+        renderCharts(
+          dailyActivity,
+          tripCounts,
+          catCounts,
+          budgetRanges,
+          searchCounts,
+        );
+        renderRecentActivity(data);
+      }
+
+      function renderCharts(
+        dailyActivity,
+        tripCounts,
+        catCounts,
+        budgetRanges,
+        searchCounts,
+      ) {
+        Object.keys(charts).forEach((key) => {
+          if (charts[key]) charts[key].destroy();
+        });
+
+        const dates = Object.keys(dailyActivity);
+        const activityData = Object.values(dailyActivity);
+        charts.timeline = new Chart(document.getElementById("timelineChart"), {
+          type: "line",
+          data: {
+            labels: dates,
+            datasets: [
+              {
+                label: "Events",
+                data: activityData,
+                borderColor: "#884DFF",
+                borderWidth: 3,
+                tension: 0.4,
+                fill: false,
+                pointBackgroundColor: "#884DFF",
+                pointBorderColor: "#fff",
+                pointBorderWidth: 2,
+                pointRadius: 4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: {
+                beginAtZero: true,
+                border: { display: false },
+                ticks: { maxTicksLimit: 5 },
+              },
+              x: { grid: { display: false }, border: { display: false } },
+            },
+          },
+        });
+
+        const sortedTrips = Object.entries(tripCounts)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 5);
+        charts.trip = new Chart(document.getElementById("tripChart"), {
+          type: "bar",
+          data: {
+            labels: sortedTrips.map((t) => t[0].substring(0, 12) + "..."),
+            datasets: [
+              {
+                label: "Views",
+                data: sortedTrips.map((t) => t[1]),
+                backgroundColor: "#0095FF",
+                borderRadius: 4,
+                barThickness: 16,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: {
+                beginAtZero: true,
+                border: { display: false },
+                grid: { display: true },
+                ticks: { maxTicksLimit: 5 },
+              },
+              x: { grid: { display: false }, border: { display: false } },
+            },
+          },
+        });
+
+        const sortedCats = Object.entries(catCounts).sort(
+          (a, b) => b[1] - a[1],
+        );
+        charts.donut = new Chart(document.getElementById("catChart"), {
+          type: "doughnut",
+          data: {
+            labels: sortedCats.map((c) => c[0].toUpperCase()),
+            datasets: [
+              {
+                data: sortedCats.map((c) => c[1]),
+                backgroundColor: [
+                  "#00E096",
+                  "#0095FF",
+                  "#FFC100",
+                  "#884DFF",
+                  "#FA5A7D",
+                ],
+                borderWidth: 0,
+                hoverOffset: 4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "65%",
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: { usePointStyle: true, boxWidth: 8, padding: 20 },
+              },
+            },
+          },
+        });
+
+        charts.budget = new Chart(document.getElementById("budgetChart"), {
+          type: "bar",
+          data: {
+            labels: Object.keys(budgetRanges),
+            datasets: [
+              {
+                label: "Searches",
+                data: Object.values(budgetRanges),
+                backgroundColor: "#FFC100",
+                borderRadius: 4,
+                barThickness: 24,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: {
+                beginAtZero: true,
+                border: { display: false },
+                grid: { display: true },
+                ticks: { maxTicksLimit: 5 },
+              },
+              x: { grid: { display: false }, border: { display: false } },
+            },
+          },
+        });
+
+        const sortedSearch = Object.entries(searchCounts)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 5);
+        const searchBox = document.getElementById("searchList");
+        searchBox.innerHTML = "";
+
+        if (sortedSearch.length === 0) {
+          searchBox.innerHTML =
+            "<div class='text-center text-sm py-6'>ยังไม่มีข้อมูลการค้นหา</div>";
+        } else {
+          const maxSearch = sortedSearch[0][1];
+          const colors = [
+            "#0095FF",
+            "#00E096",
+            "#884DFF",
+            "#FFC100",
+            "#FA5A7D",
+          ];
+
+          sortedSearch.forEach((item, index) => {
+            let percent = Math.round((item[1] / maxSearch) * 100);
+            let rankNum = (index + 1).toString().padStart(2, "0");
+            let color = colors[index % colors.length];
+
+            searchBox.innerHTML += `
+            <div class="grid grid-cols-12 items-center text-sm px-2 py-1">
+              <div class="col-span-1 text-dark font-medium">${rankNum}</div>
+              <div class="col-span-5 text-dark font-medium truncate pr-2">${item[0]}</div>
+              <div class="col-span-4 pr-4">
+                <div class="progress-track"><div class="progress-fill" style="width: ${percent}%; background-color: ${color};"></div></div>
+              </div>
+              <div class="col-span-2 text-right">
+                <span class="rank-badge" style="color: ${color}; border-color: ${color}40; background-color: ${color}10;">${percent}%</span>
+              </div>
+            </div>
+          `;
+          });
+        }
+      }
+
+      function renderRecentActivity(data) {
+        const activityBox = document.getElementById("recentActivityList");
+        activityBox.innerHTML = "";
+
+        const recentActivities = [...data].reverse();
+        let actCount = 0;
+
+        for (let row of recentActivities) {
+          if (actCount >= 6) break;
+
+          let icon = "fa-bolt",
+            color = "text-gray-400",
+            bg = "bg-gray-100",
+            text = "";
+          let timeStr = row.timestamp
+            ? new Date(row.timestamp).toLocaleTimeString("th-TH", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            : "";
+
+          if (row.action === "search" && row.search) {
+            icon = "fa-magnifying-glass";
+            color = "text-chartBlue";
+            bg = "bg-blue-50";
+            text = `ค้นหาทริป: <span class="font-medium text-dark">${row.search}</span>`;
+          } else if (row.action === "view_trip_detail" && row.viewTrip) {
+            icon = "fa-eye";
+            color = "text-chartCyan";
+            bg = "bg-green-50";
+            text = `เปิดดู: <span class="font-medium text-dark">${row.viewTrip}</span>`;
+          } else if (row.action === "click_book_trip" && row.clickLink) {
+            icon = "fa-plane-departure";
+            color = "text-chartPurple";
+            bg = "bg-purple-50";
+            let tripName = row.clickLink.split(" (Link:")[0];
+            text = `สนใจจอง: <span class="font-medium text-dark">${tripName}</span>`;
+          } else if (row.action === "submit_budget_form" && row.totalBudget) {
+            icon = "fa-wallet";
+            color = "text-chartYellow";
+            bg = "bg-yellow-50";
+            text = `คำนวณงบ: <span class="font-medium text-dark">฿${Number(row.totalBudget).toLocaleString()}</span>`;
+          }
+
+          if (text !== "") {
+            activityBox.innerHTML += `
+            <div class="flex items-center gap-3 text-sm border-b border-gray-50 pb-2 last:border-0 last:pb-0">
+              <div class="w-8 h-8 rounded-full ${bg} ${color} flex items-center justify-center shrink-0">
+                <i class="fa-solid ${icon} text-xs"></i>
+              </div>
+              <div class="flex-1 truncate text-gray-500">${text}</div>
+              <div class="text-[10px] text-gray-400 font-mono">${timeStr}</div>
+            </div>
+           `;
+            actCount++;
+          }
+        }
+
+        if (actCount === 0) {
+          activityBox.innerHTML =
+            "<div class='text-center text-sm py-6'>ยังไม่มีกิจกรรมล่าสุด</div>";
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", loadDashboard);
+    </script>
+  </body>
+</html>
