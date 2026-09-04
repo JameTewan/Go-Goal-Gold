@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard — Go Gold Goal</title>
-    <!-- Fonts: Poppins for English/Numbers, Kanit for Thai -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kanit:wght@300;400;500;600&display=swap"
       rel="stylesheet"
@@ -25,7 +24,6 @@
               textDark: "#05004E",
               textMuted: "#737791",
               brandBlue: "#4318FF",
-              // Pastel KPI Colors
               kpiRedBg: "#FFE2E5",
               kpiRedIcon: "#FA5A7D",
               kpiYelBg: "#FFF4DE",
@@ -34,7 +32,6 @@
               kpiGrnIcon: "#3CD856",
               kpiPurBg: "#F3E8FF",
               kpiPurIcon: "#BF83FF",
-              // Chart Colors
               chartBlue: "#0095FF",
               chartCyan: "#00E096",
               chartYellow: "#FFC100",
@@ -65,8 +62,6 @@
         box-shadow: 0px 4px 20px rgba(237, 237, 246, 0.5);
         padding: 24px;
       }
-
-      /* Progress Bar */
       .progress-track {
         background: #f1f5f9;
         border-radius: 4px;
@@ -85,8 +80,6 @@
         font-weight: 600;
         border: 1px solid;
       }
-
-      /* Custom Scrollbar */
       ::-webkit-scrollbar {
         width: 6px;
       }
@@ -97,8 +90,6 @@
         background: #cbd5e1;
         border-radius: 10px;
       }
-
-      /* Focus States */
       .focus-ring:focus-visible {
         outline: 2px solid #4318ff;
         outline-offset: 2px;
@@ -106,7 +97,6 @@
     </style>
   </head>
   <body class="flex h-screen overflow-hidden font-sans">
-    <!-- Mobile Sidebar Overlay -->
     <div
       id="sidebarOverlay"
       class="fixed inset-0 bg-textDark/40 z-40 hidden md:hidden transition-opacity backdrop-blur-sm"
@@ -141,8 +131,6 @@
           class="flex items-center gap-4 px-4 py-3 bg-brandBlue text-white rounded-xl font-medium shadow-md shadow-brandBlue/20 focus-ring"
           ><i class="fa-solid fa-chart-pie"></i> Dashboard</a
         >
-
-        <!-- เพิ่มเมนู Google Sheet ใน Sidebar -->
         <a
           href="https://docs.google.com/spreadsheets/d/1KnkFEimhryenAXEHQYHrEx6j1dlu8Zvq1kTRt0z_jL8/edit?usp=sharing"
           target="_blank"
@@ -151,7 +139,6 @@
         >
           <i class="fa-solid fa-table"></i> Google Sheet
         </a>
-
         <a
           href="index.html"
           class="flex items-center gap-4 px-4 py-3 text-textMuted hover:bg-gray-50 rounded-xl font-medium transition focus-ring"
@@ -162,7 +149,6 @@
 
     <!-- MAIN CONTENT -->
     <div class="flex-1 flex flex-col h-screen overflow-hidden min-w-0">
-      <!-- TOP NAV -->
       <header
         class="h-20 bg-white border-b border-gray-100 flex items-center justify-between px-4 md:px-8 shrink-0 gap-4"
       >
@@ -180,7 +166,6 @@
         </div>
 
         <div class="flex items-center gap-3 md:gap-5 flex-1 justify-end">
-          <!-- เพิ่มปุ่ม Google Sheet ตรง Header ให้กดง่ายๆ -->
           <a
             href="https://docs.google.com/spreadsheets/d/1KnkFEimhryenAXEHQYHrEx6j1dlu8Zvq1kTRt0z_jL8/edit?usp=sharing"
             target="_blank"
@@ -204,7 +189,6 @@
             />
           </div>
 
-          <!-- ปุ่ม Refresh ปรับให้สูงเท่ากัน (40px) -->
           <button
             onclick="loadDashboard()"
             aria-label="รีเฟรชข้อมูลแดชบอร์ด"
@@ -237,9 +221,7 @@
         class="flex-1 overflow-y-auto p-4 md:p-8 focus:outline-none"
         tabindex="-1"
       >
-        <!-- ROW 1: KPI & LINE CHART -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
-          <!-- Overall Stats (KPI Cards) -->
           <div class="glass-panel lg:col-span-7 flex flex-col">
             <div class="flex justify-between items-center mb-4">
               <div>
@@ -249,7 +231,6 @@
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 flex-1">
-              <!-- Card 1 -->
               <div
                 class="bg-kpiRedBg rounded-2xl p-4 flex flex-col justify-center transition-transform hover:-translate-y-1"
               >
@@ -265,7 +246,6 @@
                 <p class="text-xs font-medium text-dark/70">ผู้ใช้งานทั้งหมด</p>
                 <p class="text-[10px] text-blue-500 mt-1">+ Users</p>
               </div>
-              <!-- Card 2 -->
               <div
                 class="bg-kpiYelBg rounded-2xl p-4 flex flex-col justify-center transition-transform hover:-translate-y-1"
               >
@@ -281,7 +261,6 @@
                 <p class="text-xs font-medium text-dark/70">ทริปที่ถูกเปิดดู</p>
                 <p class="text-[10px] text-blue-500 mt-1">+ Views</p>
               </div>
-              <!-- Card 3 -->
               <div
                 class="bg-kpiGrnBg rounded-2xl p-4 flex flex-col justify-center transition-transform hover:-translate-y-1"
               >
@@ -297,7 +276,6 @@
                 <p class="text-xs font-medium text-dark/70">คำค้นหาทั้งหมด</p>
                 <p class="text-[10px] text-green-600 mt-1">+ Searches</p>
               </div>
-              <!-- Card 4 -->
               <div
                 class="bg-kpiPurBg rounded-2xl p-4 flex flex-col justify-center transition-transform hover:-translate-y-1"
               >
@@ -316,7 +294,6 @@
             </div>
           </div>
 
-          <!-- Visitor Insights (Line Chart) -->
           <div class="glass-panel lg:col-span-5 flex flex-col">
             <h2 class="text-lg font-bold text-dark mb-4">
               แนวโน้มการใช้งานทั้งหมด
@@ -331,9 +308,7 @@
           </div>
         </div>
 
-        <!-- ROW 2: 3 CHARTS -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <!-- Top Trips (Bar Chart) -->
           <div class="glass-panel">
             <h2 class="text-lg font-bold text-dark mb-4">
               5 อันดับทริปยอดนิยม
@@ -356,7 +331,6 @@
             </div>
           </div>
 
-          <!-- Categories (Doughnut Chart) -->
           <div class="glass-panel flex flex-col">
             <h2 class="text-lg font-bold text-dark mb-2">
               หมวดหมู่ที่ได้รับความสนใจ
@@ -372,7 +346,6 @@
             </div>
           </div>
 
-          <!-- Budget Ranges (Bar Chart) -->
           <div class="glass-panel">
             <h2 class="text-lg font-bold text-dark mb-4">
               ช่วงงบประมาณที่ค้นหา
@@ -396,9 +369,7 @@
           </div>
         </div>
 
-        <!-- ROW 3: TOP SEARCHES & RECENT ACTIVITIES -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <!-- Top Searches List with Progress -->
           <div class="glass-panel">
             <h2 class="text-lg font-bold text-dark mb-6">
               คำค้นหายอดฮิต (Top Searches)
@@ -418,12 +389,10 @@
               role="list"
               aria-label="รายการคำค้นหายอดฮิต"
             >
-              <!-- Injected via JS -->
               <div class="text-center text-sm py-4">กำลังโหลด...</div>
             </div>
           </div>
 
-          <!-- Recent Activities Feed -->
           <div class="glass-panel">
             <h2 class="text-lg font-bold text-dark mb-6">
               กิจกรรมล่าสุด (Recent Activity)
@@ -434,7 +403,6 @@
               role="list"
               aria-label="รายการกิจกรรมล่าสุด"
             >
-              <!-- Injected via JS -->
               <div class="text-center text-sm py-4">กำลังโหลด...</div>
             </div>
           </div>
@@ -456,11 +424,9 @@
     </div>
 
     <script>
-      // ========== ⚠️ URL Google Apps Script ==========
       const GAS_ENDPOINT =
-        "https://script.google.com/macros/s/AKfycbxGAWzCQRZ_SUJZQFzI5XIXDVeA_egvWicujdqQBxXO7cQGQOqkHHHNF71ZNjwX1pKRug/exec";
+        "https://script.google.com/macros/s/AKfycbxQErSwZbCNeF_gWFUuAHa4q7_7F8j6OFHJu5IQVvuSCvl8uNnPmAjQIyvSlnPZuTmE8Q/exec";
 
-      // Mobile Sidebar Logic
       const sidebar = document.getElementById("sidebar");
       const sidebarOverlay = document.getElementById("sidebarOverlay");
       const mobileMenuBtn = document.getElementById("mobileMenuBtn");
@@ -483,7 +449,6 @@
       closeSidebarBtn.addEventListener("click", toggleSidebar);
       sidebarOverlay.addEventListener("click", toggleSidebar);
 
-      // Global Chart.js Config
       Chart.defaults.font.family = "'Poppins', 'Kanit', sans-serif";
       Chart.defaults.color = "#737791";
       Chart.defaults.scale.grid.color = "#F1F5F9";
@@ -498,8 +463,12 @@
         try {
           const res = await fetch(GAS_ENDPOINT + "?type=analytics");
           const json = await res.json();
-          if (json.status === "success") {
-            processData(json.data);
+          if (json.status === "success" && json.isPreCalculated) {
+            renderKPI(json.data.summary);
+            renderCharts(json.data.charts);
+            renderRecentActivity(json.data.recentActivities);
+          } else if (json.data && json.data.empty) {
+            console.log("No data");
           } else {
             alert("เกิดข้อผิดพลาด: " + json.message);
           }
@@ -510,90 +479,24 @@
             document
               .getElementById("loadingOverlay")
               .classList.add("opacity-0", "pointer-events-none");
-          }, 500);
+          }, 300);
         }
       }
 
-      function processData(data) {
-        const sessions = new Set();
-        const tripCounts = {};
-        const catCounts = {};
-        const searchCounts = {};
-        const budgetRanges = {
-          "< 10k": 0,
-          "10k - 30k": 0,
-          "30k - 50k": 0,
-          "> 50k": 0,
-        };
-        const dailyActivity = {};
-        let bookCount = 0;
-        let viewCount = 0;
-
-        data.forEach((row) => {
-          if (row.sessionId) sessions.add(row.sessionId);
-          if (row.timestamp) {
-            const d = new Date(row.timestamp);
-            if (!isNaN(d)) {
-              const dateStr = d.toLocaleDateString("en-US", {
-                day: "numeric",
-                month: "short",
-              });
-              dailyActivity[dateStr] = (dailyActivity[dateStr] || 0) + 1;
-            }
-          }
-          if (row.action === "view_trip_detail" && row.viewTrip) {
-            viewCount++;
-            tripCounts[row.viewTrip] = (tripCounts[row.viewTrip] || 0) + 1;
-          }
-          if (
-            row.action === "filter_category" &&
-            row.category &&
-            row.category !== "all"
-          ) {
-            catCounts[row.category] = (catCounts[row.category] || 0) + 1;
-          }
-          if (row.action === "search" && row.search) {
-            searchCounts[row.search] = (searchCounts[row.search] || 0) + 1;
-          }
-          if (row.action === "click_book_trip") bookCount++;
-          if (row.action === "submit_budget_form" && row.totalBudget) {
-            let b = Number(row.totalBudget);
-            if (b < 10000) budgetRanges["< 10k"]++;
-            else if (b <= 30000) budgetRanges["10k - 30k"]++;
-            else if (b <= 50000) budgetRanges["30k - 50k"]++;
-            else budgetRanges["> 50k"]++;
-          }
-        });
-
-        document.getElementById("statUsers").innerText = sessions.size;
-        document.getElementById("statViews").innerText = viewCount;
-        document.getElementById("statSearches").innerText =
-          Object.keys(searchCounts).length;
-        document.getElementById("statBooks").innerText = bookCount;
-
-        renderCharts(
-          dailyActivity,
-          tripCounts,
-          catCounts,
-          budgetRanges,
-          searchCounts,
-        );
-        renderRecentActivity(data);
+      function renderKPI(summary) {
+        document.getElementById("statUsers").innerText = summary.users;
+        document.getElementById("statViews").innerText = summary.views;
+        document.getElementById("statSearches").innerText = summary.searches;
+        document.getElementById("statBooks").innerText = summary.books;
       }
 
-      function renderCharts(
-        dailyActivity,
-        tripCounts,
-        catCounts,
-        budgetRanges,
-        searchCounts,
-      ) {
+      function renderCharts(chartsData) {
         Object.keys(charts).forEach((key) => {
           if (charts[key]) charts[key].destroy();
         });
 
-        const dates = Object.keys(dailyActivity);
-        const activityData = Object.values(dailyActivity);
+        const dates = Object.keys(chartsData.dailyActivity);
+        const activityData = Object.values(chartsData.dailyActivity);
         charts.timeline = new Chart(document.getElementById("timelineChart"), {
           type: "line",
           data: {
@@ -628,7 +531,7 @@
           },
         });
 
-        const sortedTrips = Object.entries(tripCounts)
+        const sortedTrips = Object.entries(chartsData.tripCounts)
           .sort((a, b) => b[1] - a[1])
           .slice(0, 5);
         charts.trip = new Chart(document.getElementById("tripChart"), {
@@ -661,7 +564,7 @@
           },
         });
 
-        const sortedCats = Object.entries(catCounts).sort(
+        const sortedCats = Object.entries(chartsData.catCounts).sort(
           (a, b) => b[1] - a[1],
         );
         charts.donut = new Chart(document.getElementById("catChart"), {
@@ -699,11 +602,11 @@
         charts.budget = new Chart(document.getElementById("budgetChart"), {
           type: "bar",
           data: {
-            labels: Object.keys(budgetRanges),
+            labels: Object.keys(chartsData.budgetRanges),
             datasets: [
               {
                 label: "Searches",
-                data: Object.values(budgetRanges),
+                data: Object.values(chartsData.budgetRanges),
                 backgroundColor: "#FFC100",
                 borderRadius: 4,
                 barThickness: 24,
@@ -726,7 +629,7 @@
           },
         });
 
-        const sortedSearch = Object.entries(searchCounts)
+        const sortedSearch = Object.entries(chartsData.searchCounts)
           .sort((a, b) => b[1] - a[1])
           .slice(0, 5);
         const searchBox = document.getElementById("searchList");
@@ -758,24 +661,24 @@
                 <div class="progress-track" aria-hidden="true"><div class="progress-fill" style="width: ${percent}%; background-color: ${color};"></div></div>
               </div>
               <div class="col-span-2 text-right">
-                <span class="rank-badge" style="color: ${color}; border-color: ${color}40; background-color: ${color}10;" aria-label="ความนิยม ${percent} เปอร์เซ็นต์">${percent}%</span>
+                <span class="rank-badge" style="color: ${color}; border-color: ${color}40; background-color: ${color}10;">${percent}%</span>
               </div>
-            </div>
-          `;
+            </div>`;
           });
         }
       }
 
-      function renderRecentActivity(data) {
+      function renderRecentActivity(recentActivities) {
         const activityBox = document.getElementById("recentActivityList");
         activityBox.innerHTML = "";
 
-        const recentActivities = [...data].reverse();
-        let actCount = 0;
+        if (!recentActivities || recentActivities.length === 0) {
+          activityBox.innerHTML =
+            "<div class='text-center text-sm py-6'>ยังไม่มีกิจกรรมล่าสุด</div>";
+          return;
+        }
 
-        for (let row of recentActivities) {
-          if (actCount >= 6) break;
-
+        recentActivities.forEach((row) => {
           let icon = "fa-bolt",
             color = "text-gray-400",
             bg = "bg-gray-100",
@@ -817,17 +720,10 @@
                 <i class="fa-solid ${icon} text-xs"></i>
               </div>
               <div class="flex-1 truncate text-gray-500">${text}</div>
-              <div class="text-[10px] text-gray-400 font-mono" aria-label="เวลา ${timeStr}">${timeStr}</div>
-            </div>
-           `;
-            actCount++;
+              <div class="text-[10px] text-gray-400 font-mono">${timeStr}</div>
+            </div>`;
           }
-        }
-
-        if (actCount === 0) {
-          activityBox.innerHTML =
-            "<div class='text-center text-sm py-6'>ยังไม่มีกิจกรรมล่าสุด</div>";
-        }
+        });
       }
 
       window.addEventListener("DOMContentLoaded", loadDashboard);
