@@ -1490,7 +1490,7 @@
             const json = await res.json();
             if (json.status === "success" && json.data.length > 0) {
               allTrips = json.data;
-              statusEl.innerText = "● GOOGLE SHEETS LIVE";
+              statusEl.innerText = "● ONLINE / LIVE";
               statusEl.className =
                 "text-xs font-mono px-3 py-1.5 rounded-full border border-teal/30 bg-teal/10 text-teal whitespace-nowrap";
             } else throw new Error();
